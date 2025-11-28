@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Lista de Entregas</title>
+
+    <style>
+        body {
+            font-family: "Segoe UI", Arial, sans-serif;
+            background: linear-gradient(135deg, #60f6fb, #5a97f4);
+            padding: 40px;
+            animation: fadeIn 1s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes slideCard {
+            from { opacity: 0; transform: translateY(-25px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .box {
+            background: #ffffffee;
+            width: 1100px;
+            padding: 30px;
+            margin: auto;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+            animation: slideCard 0.8s ease;
+            backdrop-filter: blur(3px);
+        }
+
+        h2 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        /* FORM */
+        label {
+            font-weight: bold;
+            color: #333;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 12px;
+            border-radius: 8px;
+            border: 1px solid #a5b4fc;
+            margin-bottom: 15px;
+            transition: 0.25s ease;
+        }
+
+        input:focus, select:focus {
+            border-color: #3b3b3e;
+            box-shadow: 0 0 8px #a8a8a8;
+            outline: none;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background: #2e97bd;
+            color: white;
+            font-size: 16px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: 0.3s;
+            font-weight: bold;;
+        }
+
+        button:hover {
+            background: #2ac395;
+            transform: scale(1.03);
+        }
+
+        /* TABLE */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 25px;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+        }
+
+        th {
+            background: #3e3f45;
+            color: white;
+            padding: 12px;
+            text-align: left;
+            font-size: 15px;
+        }
+
+        td {
+            background: white;
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        tr:hover td {
+            background: #eef3ff;
+            transition: 0.2s ease;
+        }
+
+        /* BOTÃO EDITAR */
+        .btn-editar {
+            display: inline-block;
+            padding: 6px 12px;
+            background: #b8fb60;
+            color: black;
+            border-radius: 6px;
+            text-decoration: none;
+            transition: 0.2s;
+            font-weight: bold;
+        }
+
+        .btn-editar:hover {
+            background: #8edb2b;
+            transform: scale(1.05);
+        }
+
+        .msg {
+            color: #333;
+            text-align: center;
+            margin-top: 10px;
+        }
+
+        a {
+            display: inline-block;
+            margin-top: 15px;
+            color: white;
+            background: #365e96;
+            padding: 10px 15px;
+            text-decoration: none;
+            border-radius: 10px;
+            font-weight: 600;
+            transition: 0.25s;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        }
+
+        a:hover {
+            background: #214c89;
+            transform: translateY(-3px);
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="box">
+    <h2>Consulta de Entregas</h2>
+
+    <!-- FORMULÁRIO DE FILTRO -->
+    <form method="GET">
+
+        <label>PIN</label>
+        <input type="text" name="pin" value="{{ pin }}" placeholder="Buscar por PIN">
+
+        <label>Código do Produto</label>
+        <input type="text" name="codigo_produto" value="{{ codigo_produto }}" placeholder="Buscar por Bloco">
+
+        <label>Status</label>
+        <select name="status">
+            <option value="">Todos</option>
+            <option value="Recebido" {% if status=='Recebido' %}selected{% endif %}>Recebido</option>
+            <option value="Aguardando Retirada" {% if status=='Aguardando Retirada' %}selected{% endif %}>Aguardando Retirada</option>
+            <option value="Retirado" {% if status=='Retirado' %}selected{% endif %}>Retirado</option>
+        </select>
+
+        <label>Data de Recebimento</label>
+        <input type="date" name="data_recebimento" value="{{ data_recebimento }}">
+
+        <button type="submit">Consultar</button>
+    </form>
+
+    {% if entregas %}
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Morador (ID)</th>
+                    <th>Cód. Produto</th>
+                    <th>Obs</th>
+                    <th>Qtd</th>
+                    <th>Status</th>
+                    <th>PIN</th>
+                    <th>Data Recebimento</th>
+                    <th>Data Retirada</th>
+                    <th>Loja (ID)</th>
+                    <th>Nome Loja</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for e in entregas %}
+                <tr>
+                    <td>{{ e.ID_entrega }}</td>
+                    <td>{{ e.ID_morador }}</td>
+                    <td>{{ e.Codigo_produto }}</td>
+                    <td>{{ e.Observacao }}</td>
+                    <td>{{ e.Quantidade }}</td>
+                    <td>{{ e.Status }}</td>
+                    <td>{{ e.PIN }}</td>
+                    <td>{{ e.Data_recebimento }}</td>
+                    <td>{{ e.Data_retirada }}</td>
+                    <td>{{ e.ID_loja }}</td>
+                    <td>{{ e.Nome_loja }}</td>
+                    <td>
+                        <a class="btn-editar" href="{{ url_for('editar_entrega', entrega_id=e.ID_entrega) }}">
+                            Editar
+                        </a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p class="msg">Nenhuma entrega encontrada.</p>
+    {% endif %}
+
+    <br>
+    <a href="/dashboard">Voltar</a>
+</div>
+
+</body>
+</html>

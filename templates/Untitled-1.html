@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cadastrar Inquilino</title>
+
+    <style>
+      /* CORREÇÃO 2: Reset para evitar erros de tamanho */
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: Arial, sans-serif; /* Adicionado sans-serif por segurança */
+        background: #f2f2f2;
+        padding: 40px;
+        margin: 0; /* Boa prática */
+      }
+
+      .box {
+        background: white;
+        width: 100%; /* Adaptável */
+        max-width: 450px; /* Limite máximo */
+        padding: 25px;
+        margin: auto;
+        border-radius: 10px;
+        box-shadow: 0 0 10px #bbb;
+      }
+
+      input {
+        width: 100%;
+        padding: 10px;
+        border-radius: 5px;
+        border: 1px solid #aaa;
+        margin-bottom: 15px;
+        /* O box-sizing lá em cima resolve o problema do tamanho aqui */
+      }
+
+      button {
+        width: 100%;
+        padding: 10px;
+        background: #28a745;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 16px;
+      }
+
+      button:hover {
+        background: #1e7e34;
+      }
+
+      .msg {
+        color: green;
+        text-align: center;
+        margin-top: 10px;
+        background-color: #d4edda; /* Fundo verde claro para destaque */
+        padding: 10px;
+        border-radius: 5px;
+      }
+
+      a {
+        color: #0066cc;
+        text-decoration: none;
+      }
+      a:hover {
+        text-decoration: underline;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="box">
+      <h2 style="text-align: center">Cadastrar Inquilino</h2>
+
+      <form method="POST">
+        <label>Nome</label>
+        <input type="text" name="nome" required placeholder="Nome completo" />
+
+        <label>Telefone</label>
+        <input
+          type="text"
+          name="telefone"
+          required
+          placeholder="(xx) 9xxxx-xxxx"
+        />
+
+        <label>Bloco</label>
+        <input type="text" name="bloco" required />
+
+        <label>Apartamento</label>
+        <input type="text" name="apartamento" required />
+
+        <button type="submit">Cadastrar</button>
+      </form>
+
+      {% with messages = get_flashed_messages() %} {% if messages %} {% for
+      message in messages %}
+      <div class="msg">{{ message }}</div>
+      {% endfor %} {% endif %} {% endwith %}
+
+      <br />
+      <div style="text-align: center">
+        <a href="/dashboard">Voltar</a>
+      </div>
+    </div>
+  </body>
+</html>

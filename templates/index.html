@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Lista de Entregas
+    </title>
+
+    <style>
+        body {
+            font-family: Arial;
+            background: #f2f2f2;
+            padding: 40px;
+        }
+
+        .box {
+            background: white;
+            width: 900px;
+            padding: 25px;
+            margin: auto;
+            border-radius: 10px;
+            box-shadow: 0 0 10px #bbb;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #aaa;
+            margin-bottom: 15px;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            background: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover { background: #0056b3; }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 25px;
+        }
+
+        th, td {
+            border: 1px solid #ccc;
+            padding: 10px;
+            text-align: left;
+        }
+
+        th {
+            background: #e9e9e9;
+        }
+
+        .msg { color: green; text-align: center; margin-top: 10px; }
+
+        a { color: #0066cc; }
+    </style>
+</head>
+
+<body>
+
+<div class="box">
+    <h2>Lista de Inquilinos</h2>
+
+    <!-- FORMULÁRIO DE CONSULTA -->
+    <form method="GET">
+        <label>Bloco</label>
+        <input type="text" name="bloco" placeholder="Ex: A, B, C">
+
+        <label>Apartamento</label>
+        <input type="text" name="apt" placeholder="Ex: 101">
+
+        <label>Nome do Morador</label>
+        <input type="text" name="nome_morador" placeholder="Digite o nome">
+
+        <button type="submit">Consultar</button>
+    </form>
+
+    {% if inquilinos %}
+        <table>
+            <thead>
+                <tr>
+                    <th>Nome</th>
+                    <th>Telefone</th>
+                    <th>Bloco</th>
+                    <th>Apartamento</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for item in inquilinos %}
+                <tr>
+                    <td>{{ item.nome }}</td>
+                    <td>{{ item.telefone }}</td>
+                    <td>{{ item.bloco }}</td>
+                    <td>{{ item.apartamento }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p class="msg">Nenhum resultado encontrado.</p>
+    {% endif %}
+
+    <br>
+    <a href="/dashboard">Voltar</a>
+</div>
+
+</body>
+</html>

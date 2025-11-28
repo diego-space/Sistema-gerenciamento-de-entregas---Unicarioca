@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Registrar Entrega</title>
+
+    <style>
+        body {
+            font-family: "Segoe UI", Arial, sans-serif;
+            background: linear-gradient(135deg, #60f6fb, #5a97f4);
+            padding: 40px;
+            animation: fadeIn 1.2s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(-25px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .box {
+            background: white;
+            width: 500px;
+            padding: 30px;
+            margin: auto;
+            border-radius: 15px;
+            box-shadow: 0px 10px 25px rgba(0,0,0,0.25);
+            animation: slideIn 0.8s ease;
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        label {
+            font-weight: bold;
+            color: #333;
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 12px;
+            border-radius: 8px;
+            border: 1px solid #a5dbfc;
+            margin-bottom: 15px;
+            transition: 0.3s;
+        }
+
+        input:focus, select:focus, textarea:focus {
+            border-color: #3b3b3e;
+            box-shadow: 0 0 8px #a8a8a8;
+            outline: none;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background: #28a745;
+            color: white;
+            font-size: 16px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: 0.3s;
+            font-weight: bold;
+        }
+
+        button:hover {
+        transform: translateY(-3px);
+        background: #1f8a3c;
+        box-shadow: 0 6px 14px rgba(0,0,0,0.25);
+        }
+
+        a {
+            display: inline-block;
+            margin-top: 15px;
+            color: white;
+            background: #365e96;
+            padding: 10px 15px;
+            text-decoration: none;
+            border-radius: 10px;
+            font-weight: 600;
+            transition: 0.25s;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        }
+
+        a:hover {
+        background: #214c89;
+        transform: translateY(-3px);
+        }
+
+        /* ALERTAS */
+        .alert {
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            color: #333;
+            border-left: 5px solid;
+            animation: fadeIn 0.8s ease;
+        }
+
+        .alert-success {
+            background: #d4edda;
+            border-color: #28a745;
+        }
+
+        .alert-danger {
+            background: #f8d7da;
+            border-color: #dc3545;
+        }
+
+        .alert-warning {
+            background: #fff3cd;
+            border-color: #856404;
+        }
+
+        /* POPUP */
+        .popup {
+            display: none;
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #28a745;
+            padding: 14px 22px;
+            color: white;
+            border-radius: 8px;
+            box-shadow: 0 0 12px #0003;
+            animation: fadeIn 0.5s ease;
+            z-index: 9999;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="box">
+
+    <!-- 🔔 MENSAGENS DE ALERTA -->
+    {% with messages = get_flashed_messages(with_categories=True) %}
+        {% if messages %}
+            <div>
+                {% for category, message in messages %}
+                    <div class="alert alert-{{ category }}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    {% endwith %}
+
+    <div id="popup" class="popup">{{ mensagem }}</div>
+
+    <h2>Registrar Entrega</h2>
+
+    <!-- 🔍 FORMULÁRIO DE PESQUISA -->
+    <form method="GET">
+        <label>Filtrar por Bloco</label>
+        <input type="text" name="bloco" placeholder="Ex: A" />
+
+        <label>Filtrar por Apartamento</label>
+        <input type="text" name="apartamento" placeholder="Ex: 101" />
+
+        <button type="submit">Pesquisar</button>
+    </form>
+
+    <hr>
+
+    <!-- 📦 FORMULÁRIO DE REGISTRO -->
+    <form method="POST">
+
+        <label>Selecione o Inquilino</label>
+        <select name="inquilino_id" required>
+            {% for i in inquilinos %}
+                <option value="{{ i.ID_morador }}">
+                    {{ i.Nome_morador }} — Bloco {{ i.Bloco }}/{{ i.Apartamento }}
+                </option>
+            {% endfor %}
+        </select>
+
+        <label>Código do Produto</label>
+        <input type="text" name="codigo_produto" required>
+
+        <label>Quantidade</label>
+        <input type="number" name="quantidade" value="1" min="1" required>
+
+        <label>Status</label>
+        <select name="status">
+            <option value="Recebido">Recebido</option>
+            <option value="Aguardando Retirada">Aguardando Retirada</option>
+            <option value="Retirado">Retirado</option>
+        </select>
+
+        <label>Observações</label>
+        <textarea name="observacao" rows="3">Entrega registrada automaticamente</textarea>
+
+        <label>Loja</label>
+        <select name="id_loja" required>
+            {% for loja in lojas %}
+                <option value="{{ loja.ID_loja }}">{{ loja.Nome_loja }}</option>
+            {% endfor %}
+        </select>
+
+        <button type="submit">Registrar Entrega</button>
+
+    </form>
+
+    <a href="/dashboard">Voltar</a>
+
+</div>
+
+</body>
+
+<script>
+    const popup = document.getElementById("popup");
+    if (popup && popup.innerText.trim() !== "") {
+        popup.style.display = "block";
+        setTimeout(() => popup.style.display = "none", 4000);
+    }
+</script>
+
+</html>
