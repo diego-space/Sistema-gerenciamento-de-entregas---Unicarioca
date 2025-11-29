@@ -1,17 +1,20 @@
 📦 Sistema de Gerenciamento de Entregas — Unicarioca
 📚 SM252224 — Projeto de Extensão em Software Full Stack 2025/2
 
-👥 Integrantes do Grupo
+👥 Integrantes do Grupo:
+
 Nome	Matrícula
-Paulo César Pereira de Araujo	2019101699
 
 Diego de Magalhães Ferreira	2023100033
 
-Thiago Borges Ferreira	2016102847
+Guilherme Lima de Assis	2022101318
+
+Paulo César Pereira de Araujo	2019101699
 
 Michele F. Ribeiro	2018200742
 
-Guilherme Lima de Assis	2022101318
+Thiago Borges Ferreira	2016102847
+
 
 🎯 Objetivo do Projeto
 
