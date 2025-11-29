@@ -1,15 +1,18 @@
-# Sistema-gerenciamento-de-entregas---Unicarioca
-Desenvolver um sistema web profissional capaz de:​  Organizar e registrar todas as entregas de forma padronizada​ ,facilitar o acompanhamento dos registros pelos administradores​, e notificar o recebimento da entrega.
-
 📦 Sistema de Gerenciamento de Entregas — Unicarioca
 📚 SM252224 — Projeto de Extensão em Software Full Stack 2025/2
+
 👥 Integrantes do Grupo
 Nome	Matrícula
 Paulo César Pereira de Araujo	2019101699
+
 Diego de Magalhães Ferreira	2023100033
+
 Thiago Borges Ferreira	2016102847
+
 Michele F. Ribeiro	2018200742
+
 Guilherme Lima de Assis	2022101318
+
 🎯 Objetivo do Projeto
 
 O sistema foi desenvolvido para organizar e registrar entregas de forma eficiente, oferecendo:
