@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Editar Entrega</title>
+
+    <!-- Ícones Google -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <style>
+        body {
+            margin: 0;
+            padding: 40px;
+            font-family: "Segoe UI", Arial, sans-serif;
+            background: linear-gradient(135deg, #60f6fb, #5a97f4);
+            background-attachment: fixed;
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        .box {
+            background: #ffffffee;
+            width: 600px;
+            padding: 35px;
+            margin: auto;
+            border-radius: 18px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+            backdrop-filter: blur(4px);
+            animation: slideUp 0.8s ease;
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 25px;
+            font-size: 26px;
+            color: #333;
+            font-weight: 600;
+        }
+
+        label {
+            font-weight: 600;
+            color: #333;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 18px;
+            border-radius: 10px;
+            border: 1px solid #bbb;
+            transition: 0.25s;
+            background: #fafafa;
+        }
+
+        input:focus, select:focus {
+            border-color: #3b3b3e;
+            box-shadow: 0 0 8px #a8a8a8;
+            outline: none;
+            background: #fff;
+
+
+        }
+
+        button {
+            width: 100%;
+            padding: 14px;
+            background: #28a745;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 17px;
+            transition: 0.25s ease;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+            margin-top: 10px;
+        }
+
+        button:hover {
+            transform: translateY(-3px) scale(1.02);
+            background: #1f8a3c;
+            box-shadow: 0 6px 12px rgba(0,0,0,0.25);
+        }
+
+        a {
+            display: inline-block;
+            margin-top: 15px;
+            color: white;
+            background: #365e96;
+            padding: 10px 15px;
+            text-decoration: none;
+            border-radius: 10px;
+            font-weight: 600;
+            transition: 0.25s;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);;
+        }
+
+        a:hover {
+        background: #214c89;
+        transform: translateY(-3px);
+        }
+
+        /* Animações */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to   { opacity: 1; }
+        }
+
+        @keyframes slideUp {
+            from { transform: translateY(60px); opacity: 0; }
+            to   { transform: translateY(0); opacity: 1; }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="box">
+
+    <h2>Atualizar Entrega</h2>
+
+    <form method="POST" action="{{ url_for('editar_entrega', entrega_id=entrega.ID_entrega) }}">
+
+        <label>Status</label>
+        <select name="status" id="status" onchange="toggleDataRetirada()">
+            <option value="Recebido" {% if entrega.status == 'Recebido' %}selected{% endif %}>Recebido</option>
+            <option value="Aguardando Retirada" {% if entrega.status == 'Aguardando Retirada' %}selected{% endif %}>Aguardando Retirada</option>
+            <option value="Retirado" {% if entrega.status == 'Retirado' %}selected{% endif %}>Retirado</option>
+        </select>
+
+        <label>Data de Retirada</label>
+        <input type="datetime-local"
+               id="data_retirada"
+               name="data_retirada"
+               value="{{ entrega.data_retirada if entrega.data_retirada else '' }}">
+
+        <button type="submit">Salvar Alterações</button>
+    </form>
+
+    <a href="/listar-entregas">Voltar</a>
+
+</div>
+
+<script>
+function toggleDataRetirada() {
+    let status = document.getElementById("status").value;
+    let campo = document.getElementById("data_retirada");
+
+    if (status === "Retirado") {
+        campo.disabled = false;
+    } else {
+        campo.disabled = true;
+        campo.value = "";
+    }
+}
+
+toggleDataRetirada();
+</script>
+
+</body>
+</html>
